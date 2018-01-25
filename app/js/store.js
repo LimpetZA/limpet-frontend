@@ -6,7 +6,7 @@ import reducers from './reducers'
 
 const store = createStore(
   combineReducers(reducers), {
-    defaultReducer: { }
+    loginReducer: { username: 'Guest' }
   }
 )
 

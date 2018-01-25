@@ -1,7 +1,7 @@
 'use strict'
 
-import  DefaultReducer  from './defaultReducer'
+import  LoginReducer  from './LoginReducer'
 
 export default {
-  defaultReducer: DefaultReducer
+  loginReducer: LoginReducer
 }
