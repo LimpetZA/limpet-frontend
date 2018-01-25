@@ -9,6 +9,14 @@ const cwd = process.cwd()
 module.exports = {
   context: path.join(cwd, 'app'),
   devtool: 'source-map',
+  devServer: {
+    proxy: {
+      "/api": {
+        target: "http://localhost:3000",
+        pathRewrite: {"^/api" : ""}
+      }
+    }
+  },
   entry: {
     app: ['./js/index.jsx'],
     react: ['react', 'react-dom', 'react-router-dom', 'react-router', 'redux', 'react-redux', 'react-router-redux', 'react-tap-event-plugin', 'history'],
