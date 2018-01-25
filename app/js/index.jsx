@@ -82,7 +82,7 @@ class MainLayout extends React.Component {
  */
 ReactDOM.render(
     <Provider store={store}>
-      <MainLayout />
+        <MainLayout />
     </Provider>,
   document.getElementById('app')
 )

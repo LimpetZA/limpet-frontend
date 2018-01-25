@@ -53,6 +53,7 @@
     "react-router-redux": "^4.0.8",
     "react-tap-event-plugin": "^3.0.2",
     "redux": "^3.7.2",
-    "socketio": "^1.0.0"
+    "socketio": "^1.0.0",
+    "whatwg-fetch": "^2.0.3"
   }
 }
