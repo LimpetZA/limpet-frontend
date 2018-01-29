@@ -5,8 +5,11 @@
  * @ignore
  */
 import React from 'react'
-import { HashRouter as Router, Route, IndexRoute, Redirect, Switch} from 'react-router-dom'
-import createBrowserHistory from 'history/createBrowserHistory'
+import { HashRouter as Router, Route, IndexRoute, Redirect, Switch } from 'react-router-dom'
+import { createHashHistory } from 'history'
+import { ConnectedRouter } from 'react-router-redux'
+
+import store from './store'
 
 import LoginPage from './components/LoginPage.jsx'
 import Register from './components/app/Register.jsx'
@@ -28,19 +31,22 @@ const styles = {
   }
 }
 
+const history = createHashHistory()
+
 /**
  * Export
  * @ignore
  */
 export default (
-  <Router>
+  <ConnectedRouter history={history}>
     <div style={styles.parentContentStyle}>
       <Switch>
         <Redirect exact from='/' to='/login' />
         <Route path="/login" component={LoginPage}/>
         <Route path="/register" component={Register}/>
         <Route path="/app/upload" component={Upload}/>
+        <Redirect to='/'/>
       </Switch>
     </div>
-  </Router>
+  </ConnectedRouter>
 )
