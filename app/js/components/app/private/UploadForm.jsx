@@ -5,6 +5,7 @@ import { connect, Provider } from 'react-redux'
 import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
 import Button from 'material-ui/Button'
+import { Select, FormControl, FormHelperText, InputLabel, MenuItem } from 'material-ui'
 
 const style = {
   display: 'flex',
@@ -36,7 +37,6 @@ const mapDispatchToProps = (dispatch) => {
 */
 const mapStateToProps = (state, ownProps) => {
   return {
-
   }
 }
 /**
@@ -47,7 +47,7 @@ class UploadForm extends React.Component {
 
   constructor(props) {
     super(props)
-    this.state = { firstName: '', lastName: ''}
+    this.state = { date: '', lastName: ''}
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.submit = this.submit.bind(this);
@@ -81,10 +81,23 @@ render() {
   return (
     <Paper style={style}>
       <form style={style} onSubmit={this.submit} id="uploadForm">
-        <label htmlFor="hello">Data Submission</label>
-        <TextField style={componentStyle} value={this.state.firstName} onChange={this.handleInputChange} label="First Name" id="firstName" />
-        <TextField style={componentStyle} value={this.state.lastName} onChange={this.handleInputChange} label="Last Name" id="lastName" />
-        <Button raised type="submit">Submit</Button>
+        <FormControl>
+          <label htmlFor="date">Data Submission</label>
+          <Select
+            value={this.state.date}
+            onChange={this.handleInputChange}
+            inputProps={{ name: 'date', id: 'date' }}
+          >
+            <MenuItem value={"Date"}>Date</MenuItem>
+          </Select>
+          <TextField style={componentStyle}
+            value={this.state.firstName}
+            onChange={this.handleInputChange}
+            id="firstName"
+            label="" />
+          <TextField style={componentStyle} value={this.state.lastName} onChange={this.handleInputChange} label="Last Name" id="lastName" />
+          <Button raised type="submit">Submit</Button>
+        </FormControl>
       </form>
     </Paper>
   )
