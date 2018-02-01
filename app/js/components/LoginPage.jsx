@@ -4,8 +4,10 @@ import React from 'react'
 import { connect, Provider } from 'react-redux'
 import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
+import { Redirect } from 'react-router-dom'
 
 import LoginBox from './LoginBox.jsx'
+
 /**
  * mapDispatchToProps
  * @ignore
@@ -19,7 +21,10 @@ const mapDispatchToProps = (dispatch) => {
  * @ignore
  */
 const mapStateToProps = (state, ownProps) => {
-
+  let {
+    loginReducer: { isLoggedIn }
+  } = state
+  return { isLoggedIn }
 }
 
 const style = {
@@ -40,10 +45,9 @@ class LoginPage extends React.Component {
   }
 
   render() {
+    const  { isLoggedIn } = this.props
     return (
-    <div style={style} >
-      <LoginBox/>
-    </div>
+      isLoggedIn ? <Redirect to='/private/'/> : <LoginBox/>
     )
   }
 }
@@ -52,4 +56,4 @@ class LoginPage extends React.Component {
  * Export
  * @ignore
  */
-export default connect()(LoginPage)
+export default connect(mapStateToProps)(LoginPage)

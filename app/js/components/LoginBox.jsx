@@ -8,7 +8,6 @@ import TextField from 'material-ui/TextField'
 import Button from 'material-ui/Button'
 import limpetLogo from '../../images/limpet-logo.png'
 
-import { Redirect } from 'react-router-dom'
 
 const style = {
   display: 'flex',
@@ -72,9 +71,9 @@ class LoginBox extends React.Component {
       credentials: 'same-origin'
     }
 
-    let username = document.getElementById("username").value, password = document.getElementById("password").value
-    let json = JSON.stringify({ username, password })
-    let postData = { ...loginOpts,  body: json  }
+    const username = document.getElementById("username").value, password = document.getElementById("password").value
+    const json = JSON.stringify({ username, password })
+    const postData = { ...loginOpts,  body: json  }
 
     fetch(`/api/login`, postData).then((res) => this.props.attemptLogin({res}))
   }
@@ -102,7 +101,7 @@ class LoginBox extends React.Component {
     const { props: { isLoggedIn }} = this
 
     return (
-      isLoggedIn ? <Redirect to='/app/upload'/> : this.renderLogin()
+      this.renderLogin()
     )
   }
 }
