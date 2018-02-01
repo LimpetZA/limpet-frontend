@@ -12,8 +12,8 @@ const middleware = routerMiddleware(history)
 const store = createStore(
   combineReducers({...reducers, router: routerReducer}), {
     ...applyMiddleware(middleware),
-    loginReducer: { username: 'Guest', isLoggedIn: false, attemptedLogin: false }
-  }
+    loginReducer: { username: 'Guest', isLoggedIn: false, attemptedLogin: false, registerSuccess: false }
+  }, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 )
 
 export default store
