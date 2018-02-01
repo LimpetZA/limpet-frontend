@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { connect, Provider } from 'react-redux'
+import { Redirect } from 'react-router'
 import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
 
@@ -20,7 +21,10 @@ const mapDispatchToProps = (dispatch) => {
  * @ignore
  */
 const mapStateToProps = (state, ownProps) => {
-
+  let {
+    loginReducer: { isLoggedIn }
+  } = state
+  return { isLoggedIn }
 }
 
 const style = {
@@ -41,10 +45,9 @@ class Register extends React.Component {
   }
 
   render() {
+    const  { isLoggedIn } = this.props
     return (
-    <div style={style} >
-      <RegisterForm/>
-    </div>
+      isLoggedIn ? <Redirect to='/private' /> :  <RegisterForm/>
     )
   }
 }
@@ -53,4 +56,4 @@ class Register extends React.Component {
  * Export
  * @ignore
  */
-export default connect()(Register)
+export default connect(mapStateToProps)(Register)
