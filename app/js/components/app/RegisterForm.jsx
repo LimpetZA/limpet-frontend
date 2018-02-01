@@ -6,13 +6,18 @@ import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
 import { Button, Subheader } from 'material-ui'
 import handle from '../Common.jsx'
+import { Redirect } from 'react-router-dom'
 
 /**
  * mapDispatchToProps
  * @ignore
  */
 const mapDispatchToProps = (dispatch) => {
-
+  return {
+    userRegister: payload => {
+      dispatch({ type: 'USER_REGISTER', payload })
+    }
+  }
 }
 
 /**
@@ -20,7 +25,8 @@ const mapDispatchToProps = (dispatch) => {
  * @ignore
  */
 const mapStateToProps = (state, ownProps) => {
-
+  const { loginReducer: {  registerSuccess } } = state
+  return { registerSuccess }
 }
 
 const style = {
@@ -52,37 +58,66 @@ class RegisterForm extends React.Component {
 
   constructor(props) {
     super(props)
-
+    this.state = { email: "", username: "", password: "" }
     //this.handleInputChange = this.handleInputChange.bind(this);
     //this.submit = this.submit.bind(this);
   }
 
-  register() {
-    let { username, password } = {}
-    fetch('http://localhost:3000/command', {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      firstName: firstName,
-      lastName: lastName,
+  handleChange(name) {
+    return (event) => this.setState({
+      [name]: event.target.value,
     })
-  })
   }
 
-  render() {
+  register() {
+    const { props: { userRegister }, state: { username, password } } = this
+    const registerOpts = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'same-origin',
+    }
+    const json = JSON.stringify({ username, password })
+    const postData = { ...registerOpts,  body: json  }
+    console.log(postData)
+    // fetch('/api/register', postData).then(res => res.json()).then((json) => userRegister({ json })) // after the patch for json errors
+    fetch('/api/register', postData).then((res) => userRegister({ res }))
+  }
+
+  renderRegistrationForm() {
+    const { props: { registerSuccess } } = this
     return (
     <Paper style={style} >
+      { registerSuccess ? <Redirect to='/login'/>  : <div/> }
       <title style={headerStyle}>Register to Limpet ZA</title>
-      <TextField style={componentStyle} label="Username" />
-      <TextField style={componentStyle} label="Password" />
+      <TextField style={componentStyle}
+          value={this.state.username}
+          onChange={this.handleChange('username')}
+          label="Email Address"
+          id="username"
+          margin="dense" />
+      <TextField style={componentStyle}
+          value={this.state.password}
+          onChange={this.handleChange('password')}
+          label="Password"
+          id="username"
+          margin="dense" />
+      <TextField style={componentStyle} label="Desired Username"
+          value={this.state.email}
+          onChange={this.handleChange('email')}
+          margin="dense"/>
       <div style={rowContainer}>
         <Button style={componentStyle} onTouchTap={(event) => window.location.hash="/"}>Back</Button>
-        <Button style={componentStyle} raised onClick={this.register}>Done</Button>
+        <Button style={componentStyle} raised onClick={() => this.register()}>Done</Button>
       </div>
     </Paper>
+    )
+  }
+  render() {
+    let { props: { registerSuccess, isLoggedIn } } = this
+    return (
+      this.renderRegistrationForm()
     )
   }
 }
@@ -91,4 +126,4 @@ class RegisterForm extends React.Component {
  * Export
  * @ignore
  */
-export default connect()(RegisterForm)
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm)
