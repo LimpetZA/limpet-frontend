@@ -13,7 +13,7 @@ import store from './store'
 
 import LoginPage from './components/LoginPage.jsx'
 import Register from './components/app/Register.jsx'
-import Upload from './components/app/upload/Upload.jsx'
+import Private from './components/app/private/index.jsx'
 
 /**
  * Styles
@@ -24,9 +24,8 @@ const styles = {
     position: 'relative',
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'stretch',
-    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
     flex: 100,
   }
 }
@@ -44,8 +43,7 @@ export default (
         <Redirect exact from='/' to='/login' />
         <Route path="/login" component={LoginPage}/>
         <Route path="/register" component={Register}/>
-        <Route path="/app/upload" component={Upload}/>
-        <Redirect to='/'/>
+        <Route path="/private" component={Private} />
       </Switch>
     </div>
   </ConnectedRouter>
