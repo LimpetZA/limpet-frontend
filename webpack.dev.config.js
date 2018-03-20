@@ -9,6 +9,7 @@ const cwd = process.cwd()
 module.exports = {
   context: path.join(cwd, 'app'),
   devtool: 'source-map',
+  mode: 'development',
   devServer: {
     proxy: {
       "/api": {
@@ -20,7 +21,7 @@ module.exports = {
   entry: {
     app: ['./js/index.jsx'],
     react: ['react', 'react-dom', 'react-router-dom', 'react-router', 'redux', 'react-redux', 'react-router-redux', 'react-tap-event-plugin', 'history'],
-    utils: ['moment', 'material-ui']
+    utils: ['material-ui', 'bootstrap/dist/css/bootstrap.min.css', 'mdbreact/docs/css/mdb.min.css' ]
   },
 
   output: {
@@ -29,27 +30,27 @@ module.exports = {
   },
 
   module: {
-    loaders: [{
+    rules: [{
         test: /\.jsx?$/,
-        loaders: ['react-hot-loader', 'babel-loader'],
+        use: ['react-hot-loader', 'babel-loader'],
         exclude: /node_modules/
       },
       {
         test: /\.json$/,
-        loaders: [
+        use: [
           'json-loader'
         ]
       },
       {
         test: /\.css$/,
-        loaders: [
+        use: [
           'style-loader',
           'css-loader'
         ]
       },
       {
         test: /\.less$/,
-        loaders: [
+        use: [
           'style-loader',
           'css-loader',
           'less-loader'
@@ -57,17 +58,18 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        loaders: [
+        use: [
           'style-loader',
           'css-loader',
           'scss-loader'
         ]
       },
       {
-        test: /\.(png|jpg|jpeg|svg)$/,
-        loaders: [
-          'file-loader'
-        ]
+        test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000
+        }
       }
     ]
   },

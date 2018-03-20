@@ -55,10 +55,11 @@ module.exports = {
         ]
       },
       {
-        test: /\.(png|jpg|jpeg|svg)$/,
-        loaders: [
-          'file-loader'
-        ]
+        test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000
+        }
       }
     ]
   },
